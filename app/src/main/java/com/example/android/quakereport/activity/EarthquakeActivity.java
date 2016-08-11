@@ -15,31 +15,49 @@
  */
 package com.example.android.quakereport.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.quakereport.R;
 import com.example.android.quakereport.layout.EarthQuakeAdapter;
 import com.example.android.quakereport.model.EarthQuake;
+import com.example.android.quakereport.utils.QueryUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class EarthquakeActivity extends BaseActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
         // Create a fake list of earthquake locations.
-        List<EarthQuake> earthquakes = buildDataSource();
+        final List<EarthQuake> earthquakes = QueryUtils.extractEarthquakes();
 
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
         // Create a new {@link ArrayAdapter} of earthquakes
         EarthQuakeAdapter adapter = new EarthQuakeAdapter(this, earthquakes);
+
+        if(earthquakeListView != null) {
+            earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Uri url = Uri.parse(earthquakes.get(position).getUrl());
+                    Intent i = new Intent(Intent.ACTION_VIEW, url);
+                    startActivity(i);
+                }
+            });
+        }
+
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
