@@ -13,43 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.quakereport;
+package com.example.android.quakereport.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.android.quakereport.R;
+import com.example.android.quakereport.layout.EarthQuakeAdapter;
+import com.example.android.quakereport.model.EarthQuake;
+
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-public class EarthquakeActivity extends AppCompatActivity {
-
-    public static final String LOG_TAG = EarthquakeActivity.class.getName();
-
+public class EarthquakeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
         // Create a fake list of earthquake locations.
-        ArrayList<String> earthquakes = new ArrayList<>();
-        earthquakes.add("San Francisco");
-        earthquakes.add("London");
-        earthquakes.add("Tokyo");
-        earthquakes.add("Mexico City");
-        earthquakes.add("Moscow");
-        earthquakes.add("Rio de Janeiro");
-        earthquakes.add("Paris");
+        List<EarthQuake> earthquakes = buildDataSource();
 
         // Find a reference to the {@link ListView} in the layout
         ListView earthquakeListView = (ListView) findViewById(R.id.list);
 
         // Create a new {@link ArrayAdapter} of earthquakes
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_list_item_1, earthquakes);
+        EarthQuakeAdapter adapter = new EarthQuakeAdapter(this, earthquakes);
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
         earthquakeListView.setAdapter(adapter);
+    }
+
+    private List<EarthQuake> buildDataSource(){
+        Date currentDate = new Date();
+        List<EarthQuake> earthQuakesList = new ArrayList<>();
+        earthQuakesList.add(new EarthQuake("San Francisco", 7.0, currentDate));
+        earthQuakesList.add(new EarthQuake("London", 7.0, currentDate));
+        earthQuakesList.add(new EarthQuake("Tokyo", 7.0, currentDate));
+        earthQuakesList.add(new EarthQuake("Mexico City", 7.0, currentDate));
+        earthQuakesList.add(new EarthQuake("Moscow", 7.0, currentDate));
+        earthQuakesList.add(new EarthQuake("Rio de Janeiro", 7.0, currentDate));
+        earthQuakesList.add(new EarthQuake("Paris", 7.0, currentDate));
+        return earthQuakesList;
     }
 }
