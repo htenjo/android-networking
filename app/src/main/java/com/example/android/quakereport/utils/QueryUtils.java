@@ -3,6 +3,8 @@ package com.example.android.quakereport.utils;
 import android.util.Log;
 
 import com.example.android.quakereport.model.EarthQuake;
+import com.example.android.quakereport.model.EarthQuakePojo;
+import com.example.android.quakereport.model.Feature;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,6 +12,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
@@ -69,6 +72,25 @@ public final class QueryUtils {
             }
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+        }
+
+        return earthquakes;
+    }
+
+    public static ArrayList<EarthQuake> extractEarthquakes(EarthQuakePojo pojo) {
+        ArrayList<EarthQuake> earthquakes = new ArrayList<>();
+        EarthQuake quake;
+        List<Feature> features = pojo.getFeatures();
+
+        for(Feature feature : features){
+            String place = feature.getProperties().getPlace();
+            double magnitude = feature.getProperties().getMag();
+            Date date = new Date();
+            date.setTime(feature.getProperties().getTime());
+            String url = feature.getProperties().getUrl();
+
+            quake = new EarthQuake(place, magnitude, date, url);
+            earthquakes.add(quake);
         }
 
         return earthquakes;

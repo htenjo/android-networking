@@ -15,4 +15,7 @@
 -->
 <resources>
     <string name="app_name">Quake Report</string>
+
+    <string name="permission_http_label">Internet access required</string>
+    <string name="permission_http_desc">The app required internet access to get the earthquake info</string>
 </resources>

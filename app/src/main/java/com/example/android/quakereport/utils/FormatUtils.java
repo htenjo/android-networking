@@ -9,9 +9,6 @@ import java.util.Date;
  * Created by htenjo on 8/11/16.
  */
 public class FormatUtils {
-    public static final String DEFAULT_DATE_FORMAT = "MMM dd, yyyy";
-    public static final String DEFAULT_TIME_FORMAT = "hh:mm a";
-
     public static String formatDate(Date date, String pattern){
         DateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);

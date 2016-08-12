@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.android.quakereport.R;
 import com.example.android.quakereport.model.EarthQuake;
+import com.example.android.quakereport.utils.Constants;
 import com.example.android.quakereport.utils.FormatUtils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -51,10 +52,10 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake>{
         placeCityText.setText(placeParts.length < 2 ? placeParts[0].trim() : placeParts[1].trim());
 
         TextView dateText = (TextView)listItemView.findViewById(R.id.text_date);
-        dateText.setText(FormatUtils.formatDate(earthQuake.getTime(), FormatUtils.DEFAULT_DATE_FORMAT));
+        dateText.setText(FormatUtils.formatDate(earthQuake.getTime(), Constants.DEFAULT_DATE_FORMAT));
 
         TextView timeText = (TextView)listItemView.findViewById(R.id.text_time);
-        timeText.setText(FormatUtils.formatDate(earthQuake.getTime(), FormatUtils.DEFAULT_TIME_FORMAT));
+        timeText.setText(FormatUtils.formatDate(earthQuake.getTime(), Constants.DEFAULT_TIME_FORMAT));
         return listItemView;
     }
 
